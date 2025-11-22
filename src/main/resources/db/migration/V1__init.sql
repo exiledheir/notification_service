@@ -14,7 +14,7 @@ create table merchants
     tax_number varchar(50)  not null unique,
     created_at timestamp default current_timestamp,
     login     varchar(50)  not null unique,
-    password  varchar(255) not null
+    password  varchar not null
 );
 
 -- DB Notifications:
@@ -31,9 +31,9 @@ create table notifications
 (
     id         bigint generated always as identity primary key,
     status     stats        not null default 'CREATED',
-    created_at  timestamp             default current_timestamp,
-    updated_at  timestamp             default current_timestamp,
-    content    varchar(255) not null,
+    created_at timestamp not null default current_timestamp,
+    updated_at timestamp not null default current_timestamp,
+    content    varchar not null,
     merchant_id bigint       not null,
     receiver   varchar(50)  not null,
     constraint fk_merchant foreign key (merchant_id) references merchants (id) on delete cascade

@@ -1,0 +1,11 @@
+package uz.mukhammadjon.notification_service.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import uz.mukhammadjon.notification_service.entity.Merchant;
+
+@Repository
+public interface MerchantRepository extends JpaRepository<Merchant, Long> {
+
+    boolean existsMerchantByLoginOrTaxNumber(String login, String taxNumber);
+}
