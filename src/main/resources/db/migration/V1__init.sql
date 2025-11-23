@@ -25,12 +25,11 @@ create table merchants
 -- - content
 -- - merchant-id
 -- - receiver
-create type stats as enum ('CREATED','SENT','FAILED');
 
 create table notifications
 (
     id         bigint generated always as identity primary key,
-    status     stats        not null default 'CREATED',
+    status     varchar(10)        not null default 'CREATED',
     created_at timestamp not null default current_timestamp,
     updated_at timestamp not null default current_timestamp,
     content    varchar not null,

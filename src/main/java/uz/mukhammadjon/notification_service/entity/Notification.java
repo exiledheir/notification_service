@@ -36,7 +36,7 @@ public class Notification {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, columnDefinition = "stats")
+    @Column(name = "status", nullable = false)
     @Builder.Default
     private Status status = Status.CREATED;
 
