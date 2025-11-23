@@ -1,7 +1,9 @@
 package uz.mukhammadjon.notification_service.service.impl;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationEmailRequest;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationResponse;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationSmsRequest;
@@ -21,29 +23,8 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationMapper notificationMapper;
     private final MerchantRepository merchantRepository;
 
-
-//    request-body: {
-//    "merchant": 1,  only numbers -->>merchant_id
-//    "content": "", size <=250 ----->content
-//    "receiver": "" regex 998(90, 91, 93, 97) 3332211 -----> receiver
-//}
-//
-//response-body: {
-//    "notificationId": 1
-//}
-
-    //    create table notifications
-//(
-//    id         bigint generated always as identity primary key, ----------
-//    status     stats        not null default 'CREATED', default created
-//    created_at timestamp not null default current_timestamp, -------
-//    updated_at timestamp not null default current_timestamp,-------
-//    content    varchar not null,--------
-//    merchant_id bigint       not null,---------
-//    receiver   varchar(50)  not null,---------
-//    constraint fk_merchant foreign key (merchant_id) references merchants (id) on delete cascade
-//);
     @Override
+    @Transactional
     public NotificationResponse sendSms(NotificationSmsRequest request) {
         Merchant merchant = merchantRepository.findById(request.getMerchant()).
             orElseThrow(() -> new MerchantNotFoundException("Merchant with ID: " + request.getMerchant() + ", not found"));
@@ -56,6 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Transactional
     public NotificationResponse sendEmail(NotificationEmailRequest request) {
         Merchant merchant = merchantRepository.findById(request.getMerchant()).
             orElseThrow(() -> new MerchantNotFoundException("Merchant with ID: " + request.getMerchant() + ", not found"));

@@ -16,25 +16,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class MerchantServiceImpl implements MerchantService {
 
     private final MerchantRepository repository;
     private final MerchantMapper mapper;
     private final PasswordEncoder passwordEncoder;
-
-//    id        bigint generated always as identity primary key, auto generated
-//    name      varchar(50)  not null, ----
-//    webhook   varchar(100) not null, ----
-//    tax_number varchar(50)  not null unique, -----
-//    created_at timestamp default current_timestamp, auto generated
-//    login     varchar(50)  not null unique, -----
-//    password  varchar not null auto generate
-
-//    "companyName": "OOO 3 korovi", ---->> name
-//    "tax-number": "902731283718937", --->>> tax_number
-//    "login": "login", -----> login
-//    "webhook": "sss@mail.com" ----->>webhook
 
     @Transactional
     @Override
