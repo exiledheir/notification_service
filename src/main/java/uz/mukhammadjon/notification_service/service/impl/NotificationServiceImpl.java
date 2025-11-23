@@ -2,8 +2,9 @@ package uz.mukhammadjon.notification_service.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.mukhammadjon.notification_service.dto.notification.NotificationRequest;
+import uz.mukhammadjon.notification_service.dto.notification.NotificationEmailRequest;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationResponse;
+import uz.mukhammadjon.notification_service.dto.notification.NotificationSmsRequest;
 import uz.mukhammadjon.notification_service.entity.Merchant;
 import uz.mukhammadjon.notification_service.entity.Notification;
 import uz.mukhammadjon.notification_service.exception.MerchantNotFoundException;
@@ -43,14 +44,25 @@ public class NotificationServiceImpl implements NotificationService {
 //    constraint fk_merchant foreign key (merchant_id) references merchants (id) on delete cascade
 //);
     @Override
-    public NotificationResponse sendSms(NotificationRequest request) {
+    public NotificationResponse sendSms(NotificationSmsRequest request) {
         Merchant merchant = merchantRepository.findById(request.getMerchant()).
             orElseThrow(() -> new MerchantNotFoundException("Merchant with ID: " + request.getMerchant() + ", not found"));
 
-        Notification notification = notificationMapper.toEntity(request);
+        Notification notification = notificationMapper.fromSmsToEntity(request);
         notification.setMerchant(merchant);
         notification = repository.save(notification);
 
+        return notificationMapper.toResponse(notification);
+    }
+
+    @Override
+    public NotificationResponse sendEmail(NotificationEmailRequest request) {
+        Merchant merchant = merchantRepository.findById(request.getMerchant()).
+            orElseThrow(() -> new MerchantNotFoundException("Merchant with ID: " + request.getMerchant() + ", not found"));
+
+        Notification notification = notificationMapper.fromEmailToEntity(request);
+        notification.setMerchant(merchant);
+        notification = repository.save(notification);
 
         return notificationMapper.toResponse(notification);
     }
