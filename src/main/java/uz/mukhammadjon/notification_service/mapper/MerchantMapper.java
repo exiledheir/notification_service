@@ -19,5 +19,4 @@ public interface MerchantMapper {
     @Mapping(target = "password", ignore = true)
     MerchantRegistrationResponse toResponse(Merchant merchant);
 
-
 }

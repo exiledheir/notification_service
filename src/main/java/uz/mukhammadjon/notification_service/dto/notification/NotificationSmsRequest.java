@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationRequest {
+public class NotificationSmsRequest {
     @NotNull
     @Min(value = 0)
     private Long merchant;
