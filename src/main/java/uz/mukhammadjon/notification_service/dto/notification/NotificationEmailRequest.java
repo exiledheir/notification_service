@@ -1,9 +1,7 @@
 package uz.mukhammadjon.notification_service.dto.notification;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationEmailRequest {
-    @NotNull
-    @Min(value = 0)
-    private Long merchant;
+
     @NotBlank(message = "content cant be empty or null")
     @Size(max = 500)
     private String content;
