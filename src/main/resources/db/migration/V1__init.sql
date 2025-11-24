@@ -1,11 +1,3 @@
--- DB Merchants:
--- - id
--- - name
--- - webhook
--- - tax-number
--- - created-at
--- - login
--- -password
 create table merchants
 (
     id        bigint generated always as identity primary key,
@@ -16,15 +8,6 @@ create table merchants
     login     varchar(50)  not null unique,
     password  varchar not null
 );
-
--- DB Notifications:
--- - id
--- - status (CREATED, SENT, FAILED)
--- - created-at
--- - updated-at
--- - content
--- - merchant-id
--- - receiver
 
 create table notifications
 (
