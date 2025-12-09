@@ -1,7 +1,9 @@
 package uz.mukhammadjon.notification_service.service.impl;
 
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,13 @@ import uz.mukhammadjon.notification_service.service.NotificationService;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class NotificationServiceImpl implements NotificationService {
 
-    private final NotificationRepository repository;
-    private final NotificationMapper notificationMapper;
-    private final MerchantRepository merchantRepository;
-    private final NotificationProducer notificationProducer;
+    NotificationRepository repository;
+    NotificationMapper notificationMapper;
+    MerchantRepository merchantRepository;
+    NotificationProducer notificationProducer;
 
     @Override
     @Transactional

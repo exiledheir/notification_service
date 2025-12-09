@@ -1,11 +1,13 @@
 package uz.mukhammadjon.notification_service.dto.notification.event;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -13,11 +15,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationEvent {
-    private Long notificationId;
-    private String content;
-    private String receiver;
-    private Long merchantId;
-    private String type;
-    private String webhookUrl;
+
+    Long notificationId;
+    String content;
+    String receiver;
+    Long merchantId;
+    String type;
+    String webhookUrl;
 }

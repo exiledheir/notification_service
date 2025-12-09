@@ -11,12 +11,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/notification-company-number-1/registration").permitAll()
+                .requestMatchers("/api/notification/registration").permitAll()
                 .anyRequest().authenticated()
             ).httpBasic(basic -> {});
 
