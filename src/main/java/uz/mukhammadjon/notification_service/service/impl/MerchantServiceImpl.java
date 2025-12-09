@@ -1,6 +1,8 @@
 package uz.mukhammadjon.notification_service.service.impl;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,19 +18,23 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MerchantServiceImpl implements MerchantService {
 
-    private final MerchantRepository repository;
-    private final MerchantMapper mapper;
-    private final PasswordEncoder passwordEncoder;
+    MerchantRepository repository;
+    MerchantMapper mapper;
+
+    PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public MerchantRegistrationResponse registerMerchant(MerchantRegistrationRequest request) {
-        if (repository.existsMerchantByLoginOrTaxNumber(request.getLogin(), request.getTaxNumber())) {
-            throw new DataExistsException("Merchant with login or tax number already exists");
+        if (repository.existsMerchantByTaxNumber(request.getTaxNumber())) {
+            throw new DataExistsException("Merchant with tax number already exists");
         }
         String password = generatePassword();
+
+
         Merchant merchant = mapper.toEntity(request);
         merchant.setPassword(passwordEncoder.encode(password));
 

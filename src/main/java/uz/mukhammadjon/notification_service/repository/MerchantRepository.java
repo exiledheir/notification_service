@@ -9,8 +9,7 @@ import java.util.Optional;
 @Repository
 public interface MerchantRepository extends JpaRepository<Merchant, Long> {
 
-    boolean existsMerchantByLoginOrTaxNumber(String login, String taxNumber);
+    boolean existsMerchantByTaxNumber(String taxNumber);
 
     Optional<Merchant> findByLogin(String login);
-
 }

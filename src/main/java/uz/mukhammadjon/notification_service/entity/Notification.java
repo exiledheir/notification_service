@@ -11,14 +11,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import uz.mukhammadjon.notification_service.enums.Status;
 
 import java.time.LocalDateTime;
 
@@ -30,32 +33,34 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Notification {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     @Builder.Default
-    private Status status = Status.CREATED;
+    Status status = Status.CREATED;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @Column(name = "content", nullable = false)
-    private String content;
+    String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchant_id", nullable = false)
     @ToString.Exclude
-    private Merchant merchant;
+    Merchant merchant;
 
     @Column(name = "receiver", nullable = false, length = 50)
-    private String receiver;
+    String receiver;
 }

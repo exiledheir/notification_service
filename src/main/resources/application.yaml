@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        default_schema: notification_service
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    schemas: notification_service
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+
+logging:
+  level:
+    uz.mukhammadjon.notification_service: DEBUG
+    org.springframework.web: DEBUG
+    org.flywaydb.core.internal.scanner: DEBUG

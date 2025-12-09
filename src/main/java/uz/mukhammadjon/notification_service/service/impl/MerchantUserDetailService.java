@@ -1,7 +1,9 @@
 package uz.mukhammadjon.notification_service.service.impl;
 
+import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,8 +17,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class MerchantUserDetailService implements UserDetailsService {
-    private final MerchantRepository repository;
+
+    MerchantRepository repository;
 
     @Override
     @NonNull
@@ -30,5 +34,4 @@ public class MerchantUserDetailService implements UserDetailsService {
             .authorities(List.of())
             .build();
     }
-
 }
