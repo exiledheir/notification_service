@@ -22,6 +22,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import uz.mukhammadjon.notification_service.enums.Status;
+import uz.mukhammadjon.notification_service.enums.Type;
 
 import java.time.LocalDateTime;
 
@@ -45,6 +46,10 @@ public class Notification {
     @Builder.Default
     Status status = Status.CREATED;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    Type type;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     LocalDateTime createdAt;
@@ -53,7 +58,7 @@ public class Notification {
     @Column(name = "updated_at", nullable = false)
     LocalDateTime updatedAt;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "text", nullable = false)
     String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,6 +66,6 @@ public class Notification {
     @ToString.Exclude
     Merchant merchant;
 
-    @Column(name = "receiver", nullable = false, length = 50)
+    @Column(name = "receiver_info", nullable = false, length = 50)
     String receiver;
 }
