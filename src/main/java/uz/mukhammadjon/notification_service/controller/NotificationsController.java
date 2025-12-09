@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,15 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.mukhammadjon.notification_service.dto.merchant.MerchantRegistrationRequest;
 import uz.mukhammadjon.notification_service.dto.merchant.MerchantRegistrationResponse;
-import uz.mukhammadjon.notification_service.dto.notification.NotificationEmailRequest;
+import uz.mukhammadjon.notification_service.dto.notification.NotificationRequest;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationResponse;
-import uz.mukhammadjon.notification_service.dto.notification.NotificationSmsRequest;
 import uz.mukhammadjon.notification_service.dto.response.NotificationServiceResponse;
 import uz.mukhammadjon.notification_service.service.MerchantService;
 import uz.mukhammadjon.notification_service.service.NotificationService;
 
 @RestController
-@RequestMapping("/api/notification/")
+@RequestMapping("/api/notification")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class NotificationsController {
@@ -28,23 +28,20 @@ public class NotificationsController {
     NotificationService notificationService;
 
     @PostMapping("/registration")
-    public ResponseEntity<NotificationServiceResponse<MerchantRegistrationResponse>> registerMerchant(@Valid @RequestBody MerchantRegistrationRequest request) {
+    public ResponseEntity<NotificationServiceResponse<MerchantRegistrationResponse>> registerMerchant(
+        @Valid @RequestBody MerchantRegistrationRequest request) {
         MerchantRegistrationResponse response = merchantService.registerMerchant(request);
-
-        return ResponseEntity.ok(NotificationServiceResponse.success(response));
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(NotificationServiceResponse.success(response));
     }
 
-    @PostMapping("/sms")
-    public ResponseEntity<NotificationServiceResponse<NotificationResponse>> sendSms(@Valid @RequestBody NotificationSmsRequest request) {
-        NotificationResponse response = notificationService.sendSms(request);
-
-        return ResponseEntity.ok(NotificationServiceResponse.success(response));
-    }
-
-    @PostMapping("/email")
-    public ResponseEntity<NotificationServiceResponse<NotificationResponse>> sendEmail(@Valid @RequestBody NotificationEmailRequest request) {
-        NotificationResponse response = notificationService.sendEmail(request);
-
-        return ResponseEntity.ok(NotificationServiceResponse.success(response));
+    @PostMapping("/sending")
+    public ResponseEntity<NotificationServiceResponse<NotificationResponse>> sendNotification(
+        @Valid @RequestBody NotificationRequest request) {
+        NotificationResponse response = notificationService.sendNotification(request);
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(NotificationServiceResponse.success(response));
     }
 }

@@ -1,7 +1,8 @@
 package uz.mukhammadjon.notification_service.dto.notification;
 
-import jakarta.validation.constraints.Email;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import uz.mukhammadjon.notification_service.enums.Type;
 
 @Getter
 @Setter
@@ -17,12 +19,14 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NotificationEmailRequest {
+public class NotificationRequest {
 
     @NotBlank(message = "content cant be empty or null")
-    @Size(max = 500)
+    @Size(max = 250)
     String content;
-    @NotBlank(message = "reciever cant be blank")
-    @Email(message = "enter valid email")
-    String receiver;
+    @NotNull(message = "reciever cant be blank")
+    @Valid
+    Receiver receiver;
+    @NotNull(message = "type cannot be null")
+    Type type;
 }

@@ -29,5 +29,5 @@ create table price
     id         bigint generated always as identity primary key,
     created_at timestamp not null default current_timestamp,
     is_active  boolean            default true,
-    price      numeric   not null
+    price      decimal   not null
 );
