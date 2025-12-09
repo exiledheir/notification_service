@@ -17,8 +17,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,8 +38,11 @@ public class Merchant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     String name;
+
+    @Column(name = "email", nullable = false, length = 50)
+    String email;
 
     @Column(name = "webhook", nullable = false, length = 100)
     String webhook;
@@ -49,6 +54,10 @@ public class Merchant {
     @CreationTimestamp
     LocalDateTime createdAt;
 
+    @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
+    LocalDateTime updatedAt;
+
     @Column(name = "login", nullable = false, length = 50, unique = true)
     String login;
 
@@ -57,5 +66,5 @@ public class Merchant {
 
     @OneToMany(mappedBy = "merchant", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @ToString.Exclude
-    List<Notification> notifications;
+    List<Notification> notifications = new ArrayList<>();
 }
