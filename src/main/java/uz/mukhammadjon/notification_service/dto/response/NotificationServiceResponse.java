@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -14,11 +16,25 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationServiceResponse<P> {
 
-    String message;
-    P payload;
-    boolean success;
+    P data;
+    ErrorDetails error;
 
-    public static <T> NotificationServiceResponse<T> success(T payload) {
-        return NotificationServiceResponse.<T>builder().message("Success").payload(payload).success(true).build();
+    public static <T> NotificationServiceResponse<T> success(T data) {
+        return NotificationServiceResponse.<T>builder().data(data).build();
+    }
+
+    public static <T> NotificationServiceResponse<T> error(String code, String message, List<String> details) {
+        return NotificationServiceResponse.<T>builder().error(ErrorDetails.builder().code(code).message(message).details(details).build()).build();
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class ErrorDetails {
+        String code;
+        String message;
+        List<String> details;
     }
 }

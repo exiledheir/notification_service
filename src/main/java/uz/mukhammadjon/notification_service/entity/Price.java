@@ -16,6 +16,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -41,6 +42,6 @@ public class Price {
     Boolean isActive;
 
     @Column(name = "price", nullable = false)
-    Double price;
+    BigDecimal price;
 
 }

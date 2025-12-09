@@ -27,11 +27,15 @@ public class MerchantRegistrationRequest {
     @NotBlank(message = "tax number cannot be blank")
     @Size(max = 50)
     String taxNumber;
+    @NotBlank(message = "email cannot be blank")
+    @Email(message = "enter valid email")
+    @Size(max = 50)
+    String email;
     @NotBlank(message = "login cannot be blank")
     @Size(max = 50)
     String login;
     @NotBlank(message = "webhook cannot be blank")
     @Size(max = 100)
-    @Email
+    @Email(message = "enter valid webhook")
     String webhook;
 }
