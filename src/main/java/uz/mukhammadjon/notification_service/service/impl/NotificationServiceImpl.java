@@ -8,8 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.mukhammadjon.notification_service.component.kafka.producer.NotificationProducer;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationRequest;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationResponse;
+import uz.mukhammadjon.notification_service.dto.notification.event.NotificationEvent;
 import uz.mukhammadjon.notification_service.entity.Merchant;
 import uz.mukhammadjon.notification_service.entity.Notification;
 import uz.mukhammadjon.notification_service.exception.MerchantNotFoundException;
@@ -26,6 +28,7 @@ public class NotificationServiceImpl implements NotificationService {
     NotificationRepository repository;
     NotificationMapper notificationMapper;
     MerchantRepository merchantRepository;
+    NotificationProducer notificationProducer;
 
     @Override
     @Transactional
@@ -37,6 +40,9 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setType(request.getType());
 
         notification = repository.save(notification);
+
+        NotificationEvent event = notificationMapper.toEvent(notification);
+        notificationProducer.send(event);
 
         return notificationMapper.toResponse(notification);
     }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import uz.mukhammadjon.notification_service.dto.response.NotificationServiceResponse;
-import uz.mukhammadjon.notification_service.enums.ErrorCode;
+import uz.mukhammadjon.notification_service.constant.enums.ErrorCode;
 import uz.mukhammadjon.notification_service.exception.DataExistsException;
 import uz.mukhammadjon.notification_service.exception.LoginNotFoundException;
 import uz.mukhammadjon.notification_service.exception.MerchantNotFoundException;

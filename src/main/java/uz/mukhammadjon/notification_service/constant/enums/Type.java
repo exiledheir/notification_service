@@ -1,4 +1,4 @@
-package uz.mukhammadjon.notification_service.enums;
+package uz.mukhammadjon.notification_service.constant.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
