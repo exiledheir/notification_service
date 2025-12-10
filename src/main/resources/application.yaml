@@ -2,6 +2,7 @@ server:
   port: 8080
 
 spring:
+
   application:
     name: notification-service
   datasource:
@@ -22,6 +23,17 @@ spring:
     schemas: notification_service
     baseline-on-migrate: true
     baseline-version: 0
+  mail:
+    host: localhost
+    port: 1025
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
 # Kafka
 kafka:
   bootstrapServers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}

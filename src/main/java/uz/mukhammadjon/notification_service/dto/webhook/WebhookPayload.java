@@ -1,6 +1,5 @@
-package uz.mukhammadjon.notification_service.dto.notification;
+package uz.mukhammadjon.notification_service.dto.webhook;
 
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +14,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Receiver {
-    String phone;
-    String email;
-    String firebaseToken;
+public class WebhookPayload {
+
+    Long notificationId;
+    String status;
+    String type;
+    String receiver;
 }

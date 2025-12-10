@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestClient;
 
 @Configuration
 public class AppConfig {
@@ -21,5 +22,10 @@ public class AppConfig {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true)
             .build();
+    }
+
+    @Bean
+    public RestClient restClient() {
+        return RestClient.builder().build();
     }
 }

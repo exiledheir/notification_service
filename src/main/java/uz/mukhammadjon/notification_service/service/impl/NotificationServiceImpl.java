@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.mukhammadjon.notification_service.component.kafka.producer.NotificationProducer;
+import uz.mukhammadjon.notification_service.constant.enums.Status;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationRequest;
 import uz.mukhammadjon.notification_service.dto.notification.NotificationResponse;
 import uz.mukhammadjon.notification_service.dto.notification.event.NotificationEvent;
@@ -19,6 +20,7 @@ import uz.mukhammadjon.notification_service.mapper.NotificationMapper;
 import uz.mukhammadjon.notification_service.repository.MerchantRepository;
 import uz.mukhammadjon.notification_service.repository.NotificationRepository;
 import uz.mukhammadjon.notification_service.service.NotificationService;
+import uz.mukhammadjon.notification_service.service.WebhookService;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class NotificationServiceImpl implements NotificationService {
     NotificationMapper notificationMapper;
     MerchantRepository merchantRepository;
     NotificationProducer notificationProducer;
+    private final WebhookService webhookService;
 
     @Override
     @Transactional
@@ -46,6 +49,21 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationMapper.toResponse(notification);
     }
+
+    @Override
+    @Transactional
+    public void updateStatus(Long notificationId, Status status) {
+        Notification notification = repository.findById(notificationId)
+            .orElseThrow(() -> new RuntimeException("Notification not found: " + notificationId));
+
+        notification.setStatus(status);
+        repository.save(notification);
+
+        if (status == Status.SENT || status == Status.FAILED) {
+            webhookService.sendWebhook(notification);
+        }
+    }
+
     private Merchant getAuthenticatedMerchant() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
