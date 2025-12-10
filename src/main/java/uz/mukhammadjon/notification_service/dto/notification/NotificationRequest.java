@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import uz.mukhammadjon.notification_service.enums.Type;
+import uz.mukhammadjon.notification_service.constant.enums.Type;
 
 @Getter
 @Setter

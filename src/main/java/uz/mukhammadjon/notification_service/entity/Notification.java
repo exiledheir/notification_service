@@ -21,8 +21,8 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import uz.mukhammadjon.notification_service.enums.Status;
-import uz.mukhammadjon.notification_service.enums.Type;
+import uz.mukhammadjon.notification_service.constant.enums.Status;
+import uz.mukhammadjon.notification_service.constant.enums.Type;
 
 import java.time.LocalDateTime;
 
