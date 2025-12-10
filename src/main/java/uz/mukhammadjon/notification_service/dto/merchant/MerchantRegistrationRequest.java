@@ -36,6 +36,5 @@ public class MerchantRegistrationRequest {
     String login;
     @NotBlank(message = "webhook cannot be blank")
     @Size(max = 100)
-    @Email(message = "enter valid webhook")
     String webhook;
 }
